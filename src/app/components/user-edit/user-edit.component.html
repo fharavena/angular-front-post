@@ -1,0 +1,48 @@
+<div class="col-md-12 mt-3">
+  <h1>{{page_title}}</h1>
+  <p *ngIf="status != 'success'">Modifica tus datos personales de usuario</p>
+  <hr />
+  <div class="alert alert-success col-md-5" *ngIf="status == 'success'">
+    Los datos se han guardado correctamente
+  </div>
+  <div class="alert alert-danger col-md-5" *ngIf="status == 'error'">
+    Los datos no se han guardado
+  </div>
+
+  <!-- FORMULARIO DE AJUSTES -->
+
+  <form action="" class="col-md-5 ml-0 pl-0" #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input class="form-control" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required
+        pattern="[a-zA-Z]+">
+      <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">El nombre no es valido</small>
+    </div>
+    <div class="form-group">
+      <label for="surname">Apellidos</label>
+      <input class="form-control" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" required
+        pattern="[a-zA-Z]+">
+      <small *ngIf="!surname.valid && surname.touched" class="invalid-feedback d-block">Los apellidos no son
+        valido</small>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="user.email" required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El correo no es valido</small>
+    </div>
+    <div class="form-group">
+      <label for="description">Biografía</label>
+      <textarea [froalaEditor]="froala_options" class="form-control" type="text" name="description" #description="ngModel"
+        [(ngModel)]="user.description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Avatar</label>
+      <input class="form-control" type="file" name="image">
+    </div>
+
+    <input type="submit" value="Guardar cambios" class="btn btn-success" [disabled]="userEditForm.invalid">
+
+  </form>
+
+</div>
