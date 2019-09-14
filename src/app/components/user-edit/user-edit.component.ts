@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { global } from "../../services/global";
 
 
 @Component({
@@ -16,13 +17,33 @@ export class UserEditComponent implements OnInit {
   public identity;
   public token;
   public status;
+  public url;
   public froala_options: Object = {
     charCounterCount: true,
-    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat','alert'],
-    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat','alert'],
-    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat','alert'],
-    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat','alert'],
+    attribution: false,
+    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
   };
+  public afuConfig = {
+    multiple: false,
+    formatsAllowed: ".jpg, .png, .gif, .jpeg",
+    maxSize: "50",
+    uploadAPI: {
+      url: global.url+'user/upload',
+      headers: {
+        "Authorization": this._userService.getToken()
+      }
+    },
+    theme: "attachPin",
+    hideProgressBar: false,
+    hideResetBtn: true,
+    hideSelectBtn: false,
+    replaceTexts: {
+      attachPinBtn: 'Sube tu avatar de usuario'
+    }
+  }
 
   constructor(
     private _userService: UserService
@@ -31,6 +52,7 @@ export class UserEditComponent implements OnInit {
     this.user = new User(1, "", "", "ROLE_USER", "", "", "", "");
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+    this.url = global.url;
 
     //Rellenar objeto de usuario
     this.user = new User(
@@ -81,6 +103,11 @@ export class UserEditComponent implements OnInit {
         console.log(<any>error);
       }
     );
+
+  }
+  avatarUpload(datos){
+    let data = JSON.parse(datos.response);
+    this.user.image = data.message;
 
   }
 
