@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { User } from '../../models/user';
 import { UserService } from "../../services/user.service";
+import { log } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form) {
+
+
     this._userService.signup(this.user).subscribe(
       response => {
         //TOKEN
