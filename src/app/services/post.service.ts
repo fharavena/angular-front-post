@@ -15,14 +15,20 @@ export class PostService {
   }
 
   pruebas(){
-    return "hola desde el servicio post";
+    return 'hola desde el servicio post';
   }
 
   create(token, post): Observable<any>{
     let json = JSON.stringify(post);
-    let params = "json="+json;
+    let params = 'json='+json;
     let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
                                    .set('Authorization', token);
     return this._http.post(this.url + 'post', params, {headers: headers});
+  }
+
+  getPosts(): Observable<any>{
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+    return this._http.get(this.url + 'post', {headers});
   }
 }
