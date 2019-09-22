@@ -10,7 +10,7 @@
     <article class="card w-100" *ngFor="let post of posts">
       <div class="card-header">
         <h3>
-          <a [routerLink]="['/inicio']">{{ post.title }}</a>
+          <a [routerLink]="['/entrada', post.id]">{{ post.title }}</a>
         </h3>
       </div>
       <div class="card-body">
@@ -23,14 +23,19 @@
         </div>
 
         <div class="post-image w-100" *ngIf="!post.image">
-          <img
-            src="../../../assets/images/default.png"
-            alt=""
-            class="w-100"
-          />
+          <img src="../../../assets/images/default.png" alt="" class="w-100" />
         </div>
 
-        
+        <div class="post-buttons mt-3">
+          <a class="btn btn-success mr-2" [routerLink]="['/entrada', post.id]">Leer</a>
+
+          <span *ngIf="identity && identity.sub == post.user_id">
+            <a class="btn btn-warning mr-2" [routerLink]="['/editar-entrada', post.id]"
+              >Editar</a
+            >
+            <a class="btn btn-danger" [routerLink]="['/inicio']">Borrar</a>
+          </span>
+        </div>
       </div>
     </article>
   </div>
