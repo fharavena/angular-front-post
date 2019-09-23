@@ -27,13 +27,58 @@
         </div>
 
         <div class="post-buttons mt-3">
-          <a class="btn btn-success mr-2" [routerLink]="['/entrada', post.id]">Leer</a>
+          <a class="btn btn-success mr-2" [routerLink]="['/entrada', post.id]"
+            >Leer</a
+          >
 
           <span *ngIf="identity && identity.sub == post.user_id">
-            <a class="btn btn-warning mr-2" [routerLink]="['/editar-entrada', post.id]"
+            <a
+              class="btn btn-warning mr-2"
+              [routerLink]="['/editar-entrada', post.id]"
               >Editar</a
             >
-            <a class="btn btn-danger" [routerLink]="['/inicio']">Borrar</a>
+
+            <!-- Trigger the modal with a button -->
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              [attr.data-target]="'#myModal' + post.id"
+            >
+              Borrar
+            </button>
+
+            <!-- Modal -->
+            <div id="myModal{{ post.id }}" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                      &times;
+                    </button>
+                    <h4 class="modal-title">
+                      ¿Seguro que quieres borrar esta entrada?
+                    </h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Vas a borrar definitivamente {{ post.title }}.</p>
+                  </div>
+                  <div class="modal-footer">
+                    <a class="btn btn-danger" (click)="deletePost(post.id)" data-dismiss="modal"
+                      >Borrar</a
+                    >
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      data-dismiss="modal"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </span>
         </div>
       </div>

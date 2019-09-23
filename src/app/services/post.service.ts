@@ -47,6 +47,13 @@ export class PostService {
     const headers = new HttpHeaders()
       .set("Content-Type", "application/x-www-form-urlencoded")
       .set("Authorization", token);
-    return this._http.put(this.url + 'post/' + id, params, {headers});
+    return this._http.put(this.url + "post/" + id, params, { headers });
+  }
+
+  delete(token, id) {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/x-www-form-urlencoded")
+      .set("Authorization", token);
+    return this._http.delete(this.url + "post/" + id, { headers });
   }
 }

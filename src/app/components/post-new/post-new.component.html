@@ -1,7 +1,10 @@
 <div class="col-md-12 mt-3">
   <h1>{{page_title}}</h1>
-  <p>
+  <p *ngIf="!is_edit">
     Añade un articulo al blog
+  </p>
+  <p *ngIf="is_edit && post">
+    Modifica el post {{ post.title }}
   </p>
   <hr>
   <!-- MENSAJES DE ALERTA -->
@@ -38,7 +41,7 @@
 
     <div class="form-group">
       <label for="image">Imagen</label>
-      <angular-file-uploader [config]="afuConfig" [resetUpload]=resetVar (ApiResponse)="imageUpload($event)">
+      <angular-file-uploader [config]="afuConfig" (ApiResponse)="imageUpload($event)">
       </angular-file-uploader>
     </div>
     <input type="submit" value="Guardar" class="btn btn-success" [disabled]="postNew.invalid">
