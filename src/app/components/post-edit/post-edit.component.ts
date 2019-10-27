@@ -67,7 +67,7 @@ export class PostEditComponent implements OnInit {
   }
 
   getCategories() {
-    this._categoryService.getCategory().subscribe(
+    this._categoryService.getCategories().subscribe(
       response => {
         if (response.status == 'success') {
           this.categories = response.categories;
