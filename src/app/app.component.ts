@@ -23,6 +23,7 @@ export class AppComponent implements OnInit, DoCheck {
   ) {
     this.LoadUser();
     this.url = global.url;
+    //console.log(this.identity);
   }
 
   ngOnInit() {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { PostService } from "src/app/services/post.service";
-import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Post } from "../../models/post";
 import { global } from "../../services/global";
 
@@ -19,14 +19,16 @@ export class PostEditComponent implements OnInit {
   public categories;
   public status;
   public  is_edit: boolean;
+  public url: string;
 
   public froala_options: Object = {
     charCounterCount: true,
     attribution: false,
-    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
-    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
-    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
-    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    language: 'es',
+    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat'],
+    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat'],
+    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat'],
+    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat'],
   };
   public afuConfig = {
     multiple: false,
@@ -58,6 +60,7 @@ export class PostEditComponent implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.is_edit = true;
+    this.url = global.url;
   }
 
   ngOnInit() {
@@ -87,7 +90,12 @@ export class PostEditComponent implements OnInit {
       this._postService.getPost(id).subscribe(
         response => {
           if (response.status === 'success') {
-            this.post = response.categories;
+            console.log(response);
+            console.log(response.posts);
+            this.post = response.posts;
+            if (this.post.user_id != this.identity.sub) {
+              this._router.navigate(['/inicio']);
+            }
             // console.log(response);
           } else {
             this._router.navigate(['/inicio']);

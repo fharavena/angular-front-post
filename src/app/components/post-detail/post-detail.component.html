@@ -6,7 +6,10 @@ Cargando ...
     <h1>{{post.title}}</h1>
     <hr/>
     <p>
-        {{post.category.name}} - {{post.user.name + ' ' + post.user.surname}}
+        {{post.category.name}} - <a [routerLink]="['/perfil', post.user.id]">
+
+            {{post.user.name + ' ' + post.user.surname}}
+        </a>
     </p>
     <hr/>
     
